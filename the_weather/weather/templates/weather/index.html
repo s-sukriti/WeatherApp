@@ -7,11 +7,11 @@
     <title>Weather App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
 </head>
-<body>
-    <section class="hero is-primary">
+<body style="background-color: #76b5c5;">
+    <section style="background-color: #063970;">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title" style="background-color: brown;">
+                <h1 class="title" style="color: white; text-align: center;">
                     A Weather App- Using Python, Django and Openweathermap API
                 </h1>
             </div>
@@ -23,6 +23,14 @@
                 <div class="column is-offset-4 is-4">
                     <form method="POST">
                         {% csrf_token %}
+                        {% if form.is_bound and not form.is_valid %}
+                            <div class="notification is-danger">
+                                <button class="delete"></button>
+                                {% for error in form.errors %}
+                                    <p>{% if "City" in error %}{{ error }}{% else %}City does not exist{% endif %}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <div class="field has-addons">
                             <div class="control is-expanded">
                                 {{ form.name }}
@@ -38,6 +46,7 @@
             </div>
         </div>
     </section>
+    
     <section class="section">
         <div class="container">
             <div class="columns">
